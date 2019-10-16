@@ -38,8 +38,31 @@ inquirer
             }
         ])
         .then(function(res){
-            if(res.movie === "" || res.movie === null){
-                console.log('Sorry you did not pick a movie');
+            if(res.movie === "" ){
+            res.movie = "Mr. Nobody";
+            var queryURL = "http://www.omdbapi.com/?t=" + res.movie + "&y=&plot=short&apikey=47aab339";
+            // console.log(queryURL);
+            axios.get(queryURL).then(function(response){
+                // console.log(response)
+                if(response.data){
+                    console.log("\n=========================================================")
+                    console.log(`Title: ${response.data.Title}`);
+                    console.log(`Released: ${response.data.Released}`)
+                    console.log(`Rated: ${response.data.Rated}`)
+                    console.log(`Runtime: ${response.data.Runtime}`)
+                    console.log(`Genre: ${response.data.Genre}`)
+                    console.log(`Director: ${response.data.Director}`)
+                    console.log(`Plot: ${response.data.Plot}`)
+                    console.log("\n=========================================================")
+                }   
+        fs.appendFile('log.txt', `\nMovie: ${res.movie}`, function(err){
+            if(err){
+                console.log(err)
+            }else{
+                console.log(`Movie ${res.movie} has been added to log.txt file`)
+            }
+        })
+    })
             }else{
                 var queryURL = "http://www.omdbapi.com/?t=" + res.movie + "&y=&plot=short&apikey=47aab339";
                 // console.log(queryURL);
@@ -48,6 +71,7 @@ inquirer
                     if(response.data.Error){
                         console.log("Movie was not found sorry, look again or look for something new.")
                     }else if(response.data){
+                        console.log("\n=========================================================")
                         console.log(`Title: ${response.data.Title}`);
                         console.log(`Released: ${response.data.Released}`)
                         console.log(`Rated: ${response.data.Rated}`)
@@ -55,6 +79,7 @@ inquirer
                         console.log(`Genre: ${response.data.Genre}`)
                         console.log(`Director: ${response.data.Director}`)
                         console.log(`Plot: ${response.data.Plot}`)
+                        console.log("\n=========================================================")
                     }   
             fs.appendFile('log.txt', `\nMovie: ${res.movie}`, function(err){
                 if(err){
@@ -70,29 +95,31 @@ inquirer
     console.log(`Hello ${user.username}`);
 inquirer
 .prompt([
-       {
-           type: 'input',
-           message: 'What Concert are you interested in?',
-           name: 'concert',
-       }
+    {
+        type: 'input',
+        message: 'What Concert are you interested in?',
+        name: 'concert',
+    }
     ])
 .then(function(res){
     var artist = res.concert
     var queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
-    if(artist === "" || artist === null){
-        console.log('Please put in artist')
+    if(artist === ""){
+        console.log(`Sorry ${user.username} please put in artist, nothing was entered`)
     }else{
         axios.get(queryURL).then(function(response){
             console.log(response)
-            for(i = 0; i < response.data.length; i++){
-                let date = moment(response.data[i].datetime).format('MM/DD/YYYY')
-                console.log(`Venue name: ${response.data[i].venue.name}`);
-                console.log(`Lineup: ${response.data[i].lineup}`);
-                console.log(`Country: ${response.data[i].venue.country}`);
-                console.log(`${date}`);
-                console.log("----------------------------------------------------------")
-            }
-            fs.appendFile('log.txt', `\nConcert: ${artist}`, function(err){
+                for(i = 0; i < response.data.length; i++){
+                    let date = moment(response.data[i].datetime).format('MM/DD/YYYY')
+                    console.log("\n===========================================================")
+                    console.log(`Venue name: ${response.data[i].venue.name}`);
+                    console.log(`Venue Location: ${response.data[i].venue.latitude}, ${response.data[i].venue.longitude}`)
+                    console.log(`Lineup: ${response.data[i].lineup}`);
+                    console.log(`Country: ${response.data[i].venue.country}`);
+                    console.log(`${date}`);
+                    console.log("\n=========================================================")
+                }
+            fs.appendFile('log.txt',`\nConcert: ${artist}`, function(err){
                 if(err){
                     console.log(err);
                 }else{
@@ -113,9 +140,23 @@ inquirer
         }
     ])
 .then(function(result){
-    if(result.track=== ""){
-        console.log('No song was entered, please go back and enter a valid song.')
-    } else{
+    if(result.track === ""){
+        result.track = "The Sign Ace of Base"
+        spotifyObject
+        .search({type: 'track', query: result.track})
+        .then(function(response){
+            console.log(response);
+                console.log("\n===================================")
+                console.log(`Song:  ${response.tracks.items[0].name}`);
+                console.log(`Artist: ${response.tracks.items[0].album.artists[0].name}`);
+                console.log(`Spotify Preview: ${response.tracks.items[0].album.external_urls.spotify}`);
+                console.log(`Album: ${response.tracks.items[0].album.name}`);
+                console.log(`Release Year: ${response.tracks.items[0].album.release_date}`);
+                console.log(`Preview: ${response.tracks.items[0].preview_url}`);
+                console.log("\n=========================================")
+        }) 
+    }
+    else{
         spotifyObject
         .search({type: 'track', query: result.track})
         .then(function(response){
@@ -128,10 +169,44 @@ inquirer
                 console.log(`Album: ${response.tracks.items[i].album.name}`);
                 console.log(`Release Year: ${response.tracks.items[i].album.release_date}`);
                 console.log(`Preview: ${response.tracks.items[i].preview_url}`);
+                console.log("\n===============================================")
             }
+            fs.appendFile('log.txt', `\nTrack/Artist: ${result.track}`, function(err){
+                if(err){
+                    console.log(err);
+                }else{
+                    console.log(`Track/Artist ${result.track} has been added to log.txt file.`);
+                }
+            })    
         })
     }
 })    
+}else if (user.choice === "do-what-it-says"){
+    fs.readFile('random.txt', 'utf8', function(error, data){
+        if(error){
+        return  console.log(error)
+        }
+        spotifyObject
+        .search({type: 'track', query: data})
+        .then(function(response){
+            console.log(response)
+                console.log("\n===================================")
+                console.log(`Song:  ${response.tracks.items[0].name}`);
+                console.log(`Artist: ${response.tracks.items[0].album.artists[0].name}`);
+                console.log(`Spotify Preview: ${response.tracks.items[0].album.external_urls.spotify}`);
+                console.log(`Album: ${response.tracks.items[0].album.name}`);
+                console.log(`Release Year: ${response.tracks.items[0].album.release_date}`);
+                console.log(`Preview: ${response.tracks.items[0].preview_url}`);
+                console.log("\n==========================================")
+            fs.appendFile('log.txt', `\nTrackt: ${data}`, function(err){
+            if(err){
+                console.log(err);
+            }else{
+                console.log(`Track ${data} has been added to log.txt file.`);
+            }
+        }) 
+        })
+    })
 }
 });
     
