@@ -54,12 +54,12 @@ inquirer
                     console.log(`Director: ${response.data.Director}`)
                     console.log(`Plot: ${response.data.Plot}`)
                     console.log("\n=========================================================")
-                }   
-        fs.appendFile('log.txt', `\nMovie: ${res.movie}`, function(err){
+                }
+        fs.appendFile('log.txt', `\n${user.username} Movie: ${res.movie}`, function(err){
             if(err){
                 console.log(err)
             }else{
-                console.log(`Movie ${res.movie} has been added to log.txt file`)
+                console.log(`${user.username} Movie ${res.movie} has been added to log.txt file`)
             }
         })
     })
@@ -69,7 +69,7 @@ inquirer
                 axios.get(queryURL).then(function(response){
                     // console.log(response)
                     if(response.data.Error){
-                        console.log("Movie was not found sorry, look again or look for something new.")
+                        console.log(`Movie was not found sorry ${user.username},please look again or for something new.`)
                     }else if(response.data){
                         console.log("\n=========================================================")
                         console.log(`Title: ${response.data.Title}`);
@@ -81,11 +81,11 @@ inquirer
                         console.log(`Plot: ${response.data.Plot}`)
                         console.log("\n=========================================================")
                     }   
-            fs.appendFile('log.txt', `\nMovie: ${res.movie}`, function(err){
+            fs.appendFile('log.txt', `\n${user.username} Movie: ${res.movie}`, function(err){
                 if(err){
                     console.log(err)
                 }else{
-                    console.log(`Movie ${res.movie} has been added to log.txt file`)
+                    console.log(`${user.username} Movie ${res.movie} has been added to log.txt file`)
                 }
             })
         })
@@ -106,11 +106,14 @@ inquirer
     var queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
     if(artist === ""){
         console.log(`Sorry ${user.username} please put in artist, nothing was entered`)
-    }else{
+    }
         axios.get(queryURL).then(function(response){
-            console.log(response)
+            // console.log(response)
+            if(response !== response.data){
+                console.log(`Sorry ${user.username} there was no concert found, please search again`)
+            }
                 for(i = 0; i < response.data.length; i++){
-                    let date = moment(response.data[i].datetime).format('MM/DD/YYYY')
+                    var date = moment(response.data[i].datetime).format('MM/DD/YYYY')
                     console.log("\n===========================================================")
                     console.log(`Venue name: ${response.data[i].venue.name}`);
                     console.log(`Venue Location: ${response.data[i].venue.latitude}, ${response.data[i].venue.longitude}`)
@@ -119,15 +122,14 @@ inquirer
                     console.log(`${date}`);
                     console.log("\n=========================================================")
                 }
-            fs.appendFile('log.txt',`\nConcert: ${artist}`, function(err){
+            fs.appendFile('log.txt',`\n${user.username} Concert: ${artist}`, function(err){
                 if(err){
                     console.log(err);
                 }else{
-                    console.log(`Concert ${artist} has been added to log.txt file.`);
+                    console.log(`${user.username} Concert ${artist} has been added to log.txt file.`);
                 }
             })
         })
-    }
 })   
 }else if(user.choice === 'spotify-this'){
     console.log(`Hello ${user.username} lets get to rockin' out.`)
@@ -145,7 +147,7 @@ inquirer
         spotifyObject
         .search({type: 'track', query: result.track})
         .then(function(response){
-            console.log(response);
+            // console.log(response);
                 console.log("\n===================================")
                 console.log(`Song:  ${response.tracks.items[0].name}`);
                 console.log(`Artist: ${response.tracks.items[0].album.artists[0].name}`);
@@ -158,9 +160,12 @@ inquirer
     }
     else{
         spotifyObject
-        .search({type: 'track', query: result.track})
+        .search({type: 'track', query: result.track, limit: 3})
         .then(function(response){
-            console.log(response.tracks.items);
+            // console.log(response.tracks.items);
+            if(response !== response.tracks){
+                console.log(`Sorry ${user.username} there was no artist or song found by that name, please search again.`)
+            }
             for(i = 0; i < response.tracks.items.length; i++){
                 console.log("\n===================================")
                 console.log(`Song:  ${response.tracks.items[i].name}`);
@@ -171,11 +176,11 @@ inquirer
                 console.log(`Preview: ${response.tracks.items[i].preview_url}`);
                 console.log("\n===============================================")
             }
-            fs.appendFile('log.txt', `\nTrack/Artist: ${result.track}`, function(err){
+            fs.appendFile('log.txt', `\n${user.username} Track/Artist: ${result.track}`, function(err){
                 if(err){
                     console.log(err);
                 }else{
-                    console.log(`Track/Artist ${result.track} has been added to log.txt file.`);
+                    console.log(`\n${user.username} Track/Artist ${result.track} has been added to log.txt file.`);
                 }
             })    
         })
@@ -189,7 +194,7 @@ inquirer
         spotifyObject
         .search({type: 'track', query: data})
         .then(function(response){
-            console.log(response)
+            // console.log(response)
                 console.log("\n===================================")
                 console.log(`Song:  ${response.tracks.items[0].name}`);
                 console.log(`Artist: ${response.tracks.items[0].album.artists[0].name}`);
@@ -198,12 +203,12 @@ inquirer
                 console.log(`Release Year: ${response.tracks.items[0].album.release_date}`);
                 console.log(`Preview: ${response.tracks.items[0].preview_url}`);
                 console.log("\n==========================================")
-            fs.appendFile('log.txt', `\nTrackt: ${data}`, function(err){
+            fs.appendFile('log.txt', `\n${user.username} Track: ${data}`, function(err){
             if(err){
                 console.log(err);
             }else{
-                console.log(`Track ${data} has been added to log.txt file.`);
-            }
+                console.log(`\n${user.username} Track ${data} has been added to log.txt file.`);
+            } 
         }) 
         })
     })
