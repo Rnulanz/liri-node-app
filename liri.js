@@ -109,9 +109,7 @@ inquirer
     }
         axios.get(queryURL).then(function(response){
             // console.log(response)
-            if(response !== response.data){
-                console.log(`Sorry ${user.username} there was no concert found, please search again`)
-            }
+            if(response.data.length !== 0){            
                 for(i = 0; i < response.data.length; i++){
                     var date = moment(response.data[i].datetime).format('MM/DD/YYYY')
                     console.log("\n===========================================================")
@@ -129,6 +127,9 @@ inquirer
                     console.log(`${user.username} Concert ${artist} has been added to log.txt file.`);
                 }
             })
+        }else{
+            console.log(`Sorry ${user.username} there was no concert found, please search again`)
+        }
         })
 })   
 }else if(user.choice === 'spotify-this'){
@@ -163,9 +164,7 @@ inquirer
         .search({type: 'track', query: result.track, limit: 3})
         .then(function(response){
             // console.log(response.tracks.items);
-            if(response !== response.tracks){
-                console.log(`Sorry ${user.username} there was no artist or song found by that name, please search again.`)
-            }
+            if(response.tracks.items.length !== 0){
             for(i = 0; i < response.tracks.items.length; i++){
                 console.log("\n===================================")
                 console.log(`Song:  ${response.tracks.items[i].name}`);
@@ -182,7 +181,10 @@ inquirer
                 }else{
                     console.log(`\n${user.username} Track/Artist ${result.track} has been added to log.txt file.`);
                 }
-            })    
+            }) 
+        }else{
+            console.log(`Sorry ${user.username} there was no artist or song found by that name, please search again.`)
+            }
         })
     }
 })    
