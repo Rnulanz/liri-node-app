@@ -48,7 +48,7 @@ inquirer
                     console.log("\n=========================================================")
                     console.log(`Title: ${response.data.Title}`);
                     console.log(`Released: ${response.data.Released}`)
-                    console.log(`Rated: ${response.data.Rated}`)
+                    console.log(`Rating: ${response.data.Ratings[0].Value}`)
                     console.log(`Runtime: ${response.data.Runtime}`)
                     console.log(`Genre: ${response.data.Genre}`)
                     console.log(`Director: ${response.data.Director}`)
@@ -74,7 +74,7 @@ inquirer
                         console.log("\n=========================================================")
                         console.log(`Title: ${response.data.Title}`);
                         console.log(`Released: ${response.data.Released}`)
-                        console.log(`Rated: ${response.data.Rated}`)
+                        console.log(`Rating: ${response.data.Ratings[0].Value}`)
                         console.log(`Runtime: ${response.data.Runtime}`)
                         console.log(`Genre: ${response.data.Genre}`)
                         console.log(`Director: ${response.data.Director}`)
