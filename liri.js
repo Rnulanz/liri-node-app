@@ -48,7 +48,8 @@ inquirer
                     console.log("\n=========================================================")
                     console.log(`Title: ${response.data.Title}`);
                     console.log(`Released: ${response.data.Released}`)
-                    console.log(`Rating: ${response.data.Ratings[0].Value}`)
+                    console.log(`Rotten Tomatoes Rating: ${response.data.Ratings[0].Value}`)
+                    console.log(`IMDB Rating: ${response.data.imdbRating}`)
                     console.log(`Runtime: ${response.data.Runtime}`)
                     console.log(`Genre: ${response.data.Genre}`)
                     console.log(`Director: ${response.data.Director}`)
@@ -67,14 +68,15 @@ inquirer
                 var queryURL = "http://www.omdbapi.com/?t=" + res.movie + "&y=&plot=short&apikey=47aab339";
                 // console.log(queryURL);
                 axios.get(queryURL).then(function(response){
-                    // console.log(response)
+                    console.log(response)
                     if(response.data.Error){
                         console.log(`Movie was not found sorry ${user.username},please look again or for something new.`)
                     }else if(response.data){
                         console.log("\n=========================================================")
                         console.log(`Title: ${response.data.Title}`);
                         console.log(`Released: ${response.data.Released}`)
-                        console.log(`Rating: ${response.data.Ratings[0].Value}`)
+                        console.log(`Rotten Tomatoes Rating: ${response.data.Ratings[0].Value}`)
+                        console.log(`IMDB Rating: ${response.data.imdbRating}`)
                         console.log(`Runtime: ${response.data.Runtime}`)
                         console.log(`Genre: ${response.data.Genre}`)
                         console.log(`Director: ${response.data.Director}`)

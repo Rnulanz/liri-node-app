@@ -21,7 +21,7 @@ o	Country where the venue/concert is located
 OMDB for movies. Liri will provide you with the following information.
 o	Title 
 o	Year it was released
-o	Rating of the movie on IMDB
+o	Rotten Tomatoes Rating and IMDB Ratings
 o	Genre of the movie
 o	Director of the movie
 o	Plot of the movie
