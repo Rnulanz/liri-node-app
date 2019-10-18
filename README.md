@@ -1,4 +1,4 @@
-# liri-node-app
+# liri-node-app "liri.js"
 Siri, who needs Siri????? Liri will solve all your entertainment needs!
 
 --Liri will search Spotify for your favorite songs. Liri will provide you with the following information;
