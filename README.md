@@ -12,7 +12,7 @@ Liri will look just for an artist too. Liri will provide all the same informatio
 
 --Liri will search Bands in Town for concerts. Looking for a great evening out on the town or a great vacation,  Liri will provide you with the following information.
 o	Artist that you Search
-o	Venue name 
+o	Venue Name and City
 o	Venue Location using longitude and latitude 
 o	Lineup for that night
 o	Country where the venue/concert is located

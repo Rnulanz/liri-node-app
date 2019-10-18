@@ -103,3 +103,7 @@ Rich Movie: speed
 RICH Movie: Speed
 Rich Movie: Speed
 Rich Movie: Mr. Nobody
+Rich Movie: Mr. Nobody
+Rich Movie: Mr. Nobody
+rich Movie: Mr. Nobody
+Rich Concert: Taylor Swift

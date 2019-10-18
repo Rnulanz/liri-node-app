@@ -43,7 +43,7 @@ inquirer
             var queryURL = "http://www.omdbapi.com/?t=" + res.movie + "&y=&plot=short&apikey=47aab339";
             // console.log(queryURL);
             axios.get(queryURL).then(function(response){
-                // console.log(response)
+                console.log(response)
                 if(response.data){
                     console.log("\n=========================================================")
                     console.log(`Title: ${response.data.Title}`);
@@ -116,6 +116,7 @@ inquirer
                     var date = moment(response.data[i].datetime).format('MM/DD/YYYY')
                     console.log("\n===========================================================")
                     console.log(`Venue name: ${response.data[i].venue.name}`);
+                    console.log(`City name: ${response.data[i].venue.city}`);
                     console.log(`Venue Location: ${response.data[i].venue.latitude}, ${response.data[i].venue.longitude}`)
                     console.log(`Lineup: ${response.data[i].lineup}`);
                     console.log(`Country: ${response.data[i].venue.country}`);
