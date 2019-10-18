@@ -22,7 +22,7 @@ OMDB for movies. Liri will provide you with the following information.
 o	Title 
 o	Year it was released
 o	Rotten Tomatoes Rating and IMDB Ratings
-o	Genre of the movie
+o	Runtime of the movie and Genre
 o	Director of the movie
 o	Plot of the movie
 Last option that Liri will give you is, Liri’s option. With this Liri will provide you with a wonderful musical choice.
