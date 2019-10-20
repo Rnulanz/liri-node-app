@@ -131,3 +131,24 @@ function spotifyThis(userChoice){
     
 }
 
+function doWhatISay(){
+    fs.readFile('random.txt', 'utf8', function(error, data){
+        if(error){
+            return console.log(error)
+        }
+        spotify
+        .search({type: 'track', query: data})
+        .then(function(response){
+            console.log(response)
+            console.log("\n===================================")
+                console.log(`Song:  ${response.tracks.items[0].name}`);
+                console.log(`Artist: ${response.tracks.items[0].album.artists[0].name}`);
+                console.log(`Spotify Preview: ${response.tracks.items[0].album.external_urls.spotify}`);
+                console.log(`Album: ${response.tracks.items[0].album.name}`);
+                console.log(`Release Year: ${response.tracks.items[0].album.release_date}`);
+                console.log(`Preview: ${response.tracks.items[0].preview_url}`);
+                console.log("\n==========================================")
+        })
+    })
+}
+
