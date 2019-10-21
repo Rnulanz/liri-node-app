@@ -29,6 +29,8 @@ Last option that Liri will give you is, Liri’s option. With this Liri will pro
 
 Getting Started:
 
+Clone this file from github: https://github.com/Rnulanz/liri-node-app.git
+
 In your command line run: node liri.js,
 
 A prompt will pop up asking for your name
